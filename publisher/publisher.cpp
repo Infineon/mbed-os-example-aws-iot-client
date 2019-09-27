@@ -35,9 +35,9 @@ AWSIoTClient client;
 
 int main(void)
 {
-	aws_connect_params conn_params = { 0,0,NULL,NULL,NULL,NULL,NULL };
-	aws_publish_params publish_params = { AWS_QOS_ATMOST_ONCE };
-	cy_rslt_t result = CY_RSLT_SUCCESS;
+    aws_connect_params conn_params = { 0,0,NULL,NULL,NULL,NULL,NULL };
+    aws_publish_params publish_params = { AWS_QOS_ATMOST_ONCE };
+    cy_rslt_t result = CY_RSLT_SUCCESS;
 
     APP_INFO(("Connecting to the network using Wifi...\r\n"));
     network = NetworkInterface::get_default_instance();
@@ -63,12 +63,12 @@ int main(void)
     }
 
     APP_INFO(("Connected to the network successfully. IP address: %s\n", network->get_ip_address()));
-	
-	if ( ( strlen(SSL_CLIENTKEY_PEM) | strlen(SSL_CLIENTCERT_PEM) | strlen(SSL_CA_PEM) ) < 64 )
-	{
-		APP_INFO(("Please configure SSL_CLIENTKEY_PEM, SSL_CLIENTCERT_PEM and SSL_CA_PEM in aws_config.h file \n"));
-		return -1;
-	}
+    
+    if ( ( strlen(SSL_CLIENTKEY_PEM) | strlen(SSL_CLIENTCERT_PEM) | strlen(SSL_CA_PEM) ) < 64 )
+    {
+        APP_INFO(("Please configure SSL_CLIENTKEY_PEM, SSL_CLIENTCERT_PEM and SSL_CA_PEM in aws_config.h file \n"));
+        return -1;
+    }
 
     /* Initialize AWS Client library */
     AWSIoTClient client(network, AWSIOT_THING_NAME , SSL_CLIENTKEY_PEM, strlen(SSL_CLIENTKEY_PEM), SSL_CLIENTCERT_PEM, strlen(SSL_CLIENTCERT_PEM));
@@ -81,7 +81,7 @@ int main(void)
     conn_params.username = NULL;
     conn_params.password = NULL;
     conn_params.keep_alive = AWSIOT_KEEPALIVE_TIMEOUT;
-	conn_params.peer_cn = (uint8_t*) AWSIOT_ENDPOINT_ADDRESS;
+    conn_params.peer_cn = (uint8_t*) AWSIOT_ENDPOINT_ADDRESS;
     conn_params.client_id = (uint8_t*)AWSIOT_CLIENT_ID;
 
     /* connect to an AWS endpoint */
@@ -93,16 +93,16 @@ int main(void)
     }
     APP_INFO(("Connected to AWS endpoint \r\n"));
 
-	while (1) {
-		publish_params.QoS = AWS_QOS_ATMOST_ONCE;
-		result = client.publish(ep, AWSIOT_TOPIC, AWSIOT_MESSAGE, strlen((char*)AWSIOT_MESSAGE), publish_params);
-		if (result != CY_RSLT_SUCCESS) {
-			APP_INFO(("publish to topic failed \r\n"));
-			return 1;
-		}
+    while (1) {
+        publish_params.QoS = AWS_QOS_ATMOST_ONCE;
+        result = client.publish(ep, AWSIOT_TOPIC, AWSIOT_MESSAGE, strlen((char*)AWSIOT_MESSAGE), publish_params);
+        if (result != CY_RSLT_SUCCESS) {
+            APP_INFO(("publish to topic failed \r\n"));
+            return 1;
+        }
 
-		APP_INFO(("Published to topic successfully \r\n"));
+        APP_INFO(("Published to topic successfully \r\n"));
 
-		wait_ms(AWSIOT_TIMEOUT * 5);
-	}
+        wait_ms(AWSIOT_TIMEOUT * 5);
+    }
 }

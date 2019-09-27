@@ -1,28 +1,51 @@
 # Introduction
+
 This repository contains the code examples and demos for PSOC6 MCU family of devices bundled with connectivity.
 
-# Instructions to build AWS IoT and GreenGrass publisher/subscriber code examples
+The publisher is part of the mbed-os-example-aws-iot-client example application.
 
-1. clone the desired code examples repository
+This application connects to a Wi-Fi network as a STA(client), establishes a secure TCP connection over MQTT to the AWS endpoint and publishes messages periodically to a topic.
+
+# Supported platforms
+
+This application and it's features are supported on following Cypress platforms:
+* [PSoC6 WiFi-BT Prototyping Kit (CY8CPROTO-062-4343W)](https://www.cypress.com/documentation/development-kitsboards/psoc-6-wi-fi-bt-prototyping-kit-cy8cproto-062-4343w)
+* [PSoC6 WiFi-BT Pioneer Kit (CY8CKIT-062-WiFi-BT)](https://www.cypress.com/documentation/development-kitsboards/psoc-6-wifi-bt-pioneer-kit-cy8ckit-062-wifi-bt)
+* CY8CKIT-062S2-43012
+
+# Dependent libraries
+
+This section provides the list of dependency libraries required for this application to work.
+* [ARM mbed-os stack version 5.13.1 and above](https://os.mbed.com/mbed-os/releases)
+* [Cypress AWS IoT middleware library](https://github.com/cypresssemiconductorco/aws-iot)
+* [Cypress Connectivity Utilities Library](https://github.com/cypresssemiconductorco/connectivity-utilities)
+
+# Instructions to build AWS IoT publisher code example
+
+1. Clone the desired code examples repository 
  
-2. Change to the application folder (for instance publisher)
+2. Change to the application folder (publisher)
 
-3. prepare the cloned working directory for mbed
+3. Prepare the cloned working directory for mbed
         
         mbed config root .
 
-4. pull the necessary libraries and its dependencies.
+4. Pull the necessary libraries and its dependencies.
 This will pull mbed-os, AWS_Iot_Client library and its internal 3rd party dependencies
 
         mbed deploy
 
-5. Configure the AWS parameters such as Thing name, certificates, private key etc. per the user's AWS account
+5. Configure the SSID and passphrase of the desired network in the accopmpanying mbed_app.json
+
+6. Configure the AWS parameters such as Thing name, certificates, private key etc. per the user's AWS account
 	- Refer to 'Getting Started with AWS IoT' on the AWS documentation
 	    - https://docs.aws.amazon.com/iot/latest/developerguide/iot-gs.html
 	- Using the above reference, fill out the aws_config.h parameters
+    - The aws_config.h includes sample certificates, private keys to illustrate the expected format of these credentials
 
-6. build the publisher app (.hex binary)
+7. Build the publisher app (.hex binary)
 
         mbed compile -t GCC_ARM -m CY8CPROTO_062_4343W  
 
-The instructions for the other AWS code examples are similar.
+8. Connect to the kit via serial port. You should observe console logs that indicate connection to network, AWS endpoint and publish status
+
