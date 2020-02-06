@@ -1,10 +1,39 @@
+/*
+ * Copyright 2019-2020 Cypress Semiconductor Corporation
+ * SPDX-License-Identifier: Apache-2.0
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/** @file
+ *
+ * Cofiguration information related to the user AWS account
+ */
+#pragma once
 
 /* Change endpoint address, thing name & topic based on your AWS IoT account configurations. Below values are just for reference */
 #define AWSIOT_ENDPOINT_ADDRESS             "a38td4ke8seeky-ats.iot.us-east-1.amazonaws.com"
+
+/* Thing name MUST be present and MUST be unique. */
+/* A typical device use case involves the use of the thing name as the default MQTT client ID. */
+/* Although AWS IoT do not enforce a mapping between a things registry name and its use of MQTT client IDs, certificates, or shadow state, */
+/* AWS recommend you choose a thing name and use it as MQTT client ID for both the registry and the Device Shadow service. */
+/* As per the above recommendation from AWS, in this application AWSIOT_THING_NAME is used as MQTT ClientID. */
+/* NOTE: When a same thing name is used by multiple AWS IoT devices, only the most recently initiated connection will stay alive, */
+/* and rest of the connected devices (all the earlier devices) will receive disconnect event from AWS cloud. */
+/* Hence, each AWS IoT (physical) device needs to have a unique thing name and corresponding thing name created in AWS Cloud. */
 #define AWSIOT_THING_NAME                   "AwsIoT_Subscriber"
 
-/* Make sure Client-ID is unique for each AWS IoT connection */
-#define AWSIOT_CLIENT_ID 					"AwsIoT subscriber APP"
 #define AWSIOT_TOPIC                        "AWS_TOPIC"
 
 /* These are invalid certificates and should only be used to refer the certificate format. Please load valid certificate and private key based on your AWS account */
