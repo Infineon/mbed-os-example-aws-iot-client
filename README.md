@@ -1,3 +1,5 @@
+**This repository is deprecated.** Use the Mbed OS example available here - https://github.com/ARMmbed/mbed-os-example-aws
+
 # mbed-os-example-aws-iot-client
 
 This repository contains the code examples for AWS IoT client - publisher and subscriber.
